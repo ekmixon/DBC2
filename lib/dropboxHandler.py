@@ -12,7 +12,7 @@ class DropboxHandler:
 	#-----------------------------------------------------------
 	def __init__(self, token):
 		self.token = token
-		self.authorization = "Bearer " + token
+		self.authorization = f"Bearer {token}"
 		self.dropboxAPI = {
 			'listFolder': 'https://api.dropboxapi.com/2/files/list_folder',
 			'uploadFile': 'https://content.dropboxapi.com/2/files/upload',
@@ -57,9 +57,9 @@ class DropboxHandler:
 		headers = {
 			'Content-Type': 'application/json'				
 		}
-		
+
 		data = '{"path": "' + path + '"}'
-		
+
 		return self.sendRequest(self.dropboxAPI['deleteFile'], headers, data)
 	
 	#-----------------------------------------------------------
@@ -68,9 +68,9 @@ class DropboxHandler:
 		headers = {
 			'Content-Type': 'application/json'				
 		}
-		
+
 		data = "{\"path\": \"" + path +"\",\"recursive\": false,\"include_media_info\": false,\"include_deleted\": false,\"include_has_explicit_shared_members\": false}"
-			
+
 		return self.sendRequest(self.dropboxAPI['listFolder'], headers, data, resultFormat=resultFormat)
 	
 	#-----------------------------------------------------------
@@ -98,10 +98,10 @@ class DropboxHandler:
 		headers = {
 			'Content-Type': 'application/json'
 		}
-		
+
 		# Prepare request body
 		data = '{"path": "' + path + '","include_media_info": false,"include_deleted": false,"include_has_explicit_shared_members": false}'
-		
+
 		return self.sendRequest(self.dropboxAPI['getMetaData'], headers, data)
 
 	#-----------------------------------------------------------
@@ -110,10 +110,10 @@ class DropboxHandler:
 		headers = {
 			'Content-Type': 'application/json'
 		}
-		
+
 		# Prepare request body
 		data = '{"path": "' + path + '", "settings": { "requested_visibility": "public"}}'
-		
+
 		return self.sendRequest(self.dropboxAPI['shareFile'], headers, data, resultFormat = "json")
 
 	#-----------------------------------------------------------
@@ -122,8 +122,8 @@ class DropboxHandler:
 		headers = {
 			'Content-Type': 'application/json'
 		}
-		
+
 		# Prepare request body
 		data = '{"path": "' + path + '"}'
-		
+
 		return self.sendRequest(self.dropboxAPI['getSharedLink'], headers, data, resultFormat = "json")

@@ -206,14 +206,28 @@ class MainMenu(cmd.Cmd):
 	def complete_genStager(self, text, line, startidx, endidx):
 		result = []
 		if startidx < 15:
-			for stagerType in ['oneliner', 'batch', 'batch2', 'macro', 'msbuild', 'javascript', 'javascript2', 'ducky', 'sct']:
-				if stagerType.startswith(text):
-					result.append(stagerType)	
+			result.extend(
+				stagerType
+				for stagerType in [
+					'oneliner',
+					'batch',
+					'batch2',
+					'macro',
+					'msbuild',
+					'javascript',
+					'javascript2',
+					'ducky',
+					'sct',
+				]
+				if stagerType.startswith(text)
+			)
+
 		else:
-			stageList = [a for a in self.statusHandler.publishedStageList]
-			for stageName in stageList:
-				if stageName.startswith(text):
-					result.append(stageName)
+			stageList = list(self.statusHandler.publishedStageList)
+			result.extend(
+				stageName for stageName in stageList if stageName.startswith(text)
+			)
+
 		return result
 
 	#------------------------------------------------------------------------------------
@@ -251,7 +265,6 @@ class MainMenu(cmd.Cmd):
 	def do_exit(self, args):
 		"""Exit the program"""
 		raise KeyboardInterrupt
-		return True
 		
 	#------------------------------------------------------------------------------------
 	def do_help(self, args):
@@ -670,7 +683,6 @@ class AgentMenu(cmd.Cmd):
 	def do_exit(self, args):
 		"""Exit the program"""
 		raise KeyboardInterrupt
-		return True
 
 	#------------------------------------------------------------------------------------
 	def do_help(self, args):
