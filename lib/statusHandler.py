@@ -21,14 +21,13 @@ class StatusHandler:
 	#------------------------------------------------------------------------------------
 	def createTask(self, agentID, cmd, args = []):
 		taskID = self.agentList[agentID]['lastTaskID'] + 1
-		task = {
+		return {
 			'agentID': agentID,
 			'id': taskID,
-			'fileName': agentID + "." + str(taskID),
+			'fileName': f"{agentID}.{str(taskID)}",
 			'cmd': cmd,
-			'args': args
+			'args': args,
 		}
-		return task
 
 	#------------------------------------------------------------------------------------
 	def commitTask(self, task):
@@ -43,11 +42,10 @@ class StatusHandler:
 
 	#------------------------------------------------------------------------------------
 	def createAgent(self, agentID, agentLastBeacon, agentStatusFile):
-		self.agentList[agentID] = {}
-		self.agentList[agentID]['status'] = "UNKNOWN"
+		self.agentList[agentID] = {'status': "UNKNOWN"}
 		self.agentList[agentID]['lastBeacon'] = agentLastBeacon
 		self.agentList[agentID]['statusFile'] = agentStatusFile
-		self.agentList[agentID]['commandFile'] = agentStatusFile[0:-7] + ".cmd"
+		self.agentList[agentID]['commandFile'] = agentStatusFile[:-7] + ".cmd"
 		self.agentList[agentID]['wakeUpTime'] = "N/A"
 		self.agentList[agentID]['lastTaskID'] = 0
 		self.agentList[agentID]['pendingTaskID'] = 0

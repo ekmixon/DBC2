@@ -15,12 +15,13 @@ class GenStager:
 		# Construct the powershell code from a template, substituting palceholders with proper parameters
 		posh = helpers.convertFromTemplate(stagerParameters, cfg.defaultPath['poshTpl'])
 
-		if posh == None: return
-		
+		if posh is None: return
+
 		# Turn the powershell code into a suitable powershell base64 encoded one line command
 		base64Payload = helpers.powershellEncode(posh)
-		oneLiner = helpers.convertFromTemplate({'payload': base64Payload}, cfg.defaultPath['onelinerTpl'])
-		return oneLiner
+		return helpers.convertFromTemplate(
+			{'payload': base64Payload}, cfg.defaultPath['onelinerTpl']
+		)
 
 	#-----------------------------------------------------------
 	@classmethod

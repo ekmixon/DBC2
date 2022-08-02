@@ -13,47 +13,42 @@ from string import Template
 
 #------------------------------------------------------------------------
 def printAgentList(agentList):
-	table = []
-	table.append(["Agent ID", "Status", "Last Beacon (UTC)", "Wake Up time (UTC)"])
+	table = [["Agent ID", "Status", "Last Beacon (UTC)", "Wake Up time (UTC)"]]
 	for agentID, agentInfo in agentList.items():
-		line = []
-		line.append(agentID)
-		line.append(agentInfo['status'])
-		line.append(agentInfo['lastBeacon'])
-		line.append(agentInfo['wakeUpTime'])
+		line = [
+			agentID,
+			agentInfo['status'],
+			agentInfo['lastBeacon'],
+			agentInfo['wakeUpTime'],
+		]
+
 		table.append(line)
-	
-	print ""	
-	print tabulate(table, headers="firstrow")
-	print ""
+
+	table = []
+	table = []
+	table = []
 
 #------------------------------------------------------------------------
 def printStageList(stageList):
-	table = []
-	table.append(["Stage name", "Public link"])
+	table = [["Stage name", "Public link"]]
 	for stageName, stageLink in stageList.items():
-		line = []
-		line.append(stageName)
-		line.append(stageLink)
+		line = [stageName, stageLink]
 		table.append(line)
-	
-	print ""	
-	print tabulate(table, headers="firstrow")
-	print ""
+
+	table = []
+	table = []
+	table = []
 
 #------------------------------------------------------------------------
 def printModuleList(moduleList):
-	table = []
-	table.append(["Module name", "Public link"])
+	table = [["Module name", "Public link"]]
 	for moduleName, moduleLink in moduleList.items():
-		line = []
-		line.append(moduleName)
-		line.append(moduleLink)
+		line = [moduleName, moduleLink]
 		table.append(line)
-	
-	print ""	
-	print tabulate(table, headers="firstrow")
-	print ""
+
+	table = []
+	table = []
+	table = []
 
 
 #------------------------------------------------------------------------
@@ -87,21 +82,20 @@ def b64decode(data):
 
 #------------------------------------------------------------------------
 def randomString(length = -1, charset = string.ascii_letters):
-    """
+	"""
     Author: HarmJ0y, borrowed from Empire
     Returns a random string of "length" characters.
     If no length is specified, resulting string is in between 6 and 15 characters.
     A character set can be specified, defaulting to just alpha letters.
     """
-    if length == -1: length = random.randrange(6,16)
-    random_string = ''.join(random.choice(charset) for x in range(length))
-    return random_string
+	if length == -1: length = random.randrange(6,16)
+	return ''.join(random.choice(charset) for _ in range(length))
 
 #------------------------------------------------------------------------
 def randomInt(minimum, maximum):
 	""" Returns a random integer between or equald to minimum and maximum
 	"""
-	if minimum < 0: minimum = 0
+	minimum = max(minimum, 0)
 	if maximum < 0: maximum = 100
 	return random.randint(minimum, maximum)
 
@@ -154,46 +148,42 @@ def retrieveQuotedArgs(args, maxNbArgs):
 	temp = shlex.split(args)
 	if len(temp) <= maxNbArgs:
 		return temp
-	else:
-		result = temp[:maxNbArgs-1]
-		result.append(' '.join(temp[maxNbArgs-1:len(temp)]))
-		return result
+	result = temp[:maxNbArgs-1]
+	result.append(' '.join(temp[maxNbArgs-1:]))
+	return result
 
 #------------------------------------------------------------------------
 def color(string, color=None):
-    """
+	"""
     Author: HarmJ0y, borrowed from Empire
     Change text color for the Linux terminal.
     """
     
-    attr = []
-    # bold
-    attr.append('1')
-    
-    if color:
-        if color.lower() == "red":
-            attr.append('31')
-        elif color.lower() == "green":
-            attr.append('32')
-        elif color.lower() == "blue":
-            attr.append('34')
-        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+	attr = ['1']
+	if color:
+	    if color.lower() == "red":
+	        attr.append('31')
+	    elif color.lower() == "green":
+	        attr.append('32')
+	    elif color.lower() == "blue":
+	        attr.append('34')
+	    return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
 
-    else:
-        if string.strip().startswith("[!]"):
-            attr.append('31')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
-        elif string.strip().startswith("[+]"):
-            attr.append('32')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
-        elif string.strip().startswith("[?]"):
-            attr.append('33')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
-        elif string.strip().startswith("[*]"):
-            attr.append('34')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
-        else:
-            return string
+	else:
+	    if string.strip().startswith("[!]"):
+	        attr.append('31')
+	        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+	    elif string.strip().startswith("[+]"):
+	        attr.append('32')
+	        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+	    elif string.strip().startswith("[?]"):
+	        attr.append('33')
+	        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+	    elif string.strip().startswith("[*]"):
+	        attr.append('34')
+	        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+	    else:
+	        return string
 
 #------------------------------------------------------------------------
 def printBanner():
